@@ -3,7 +3,6 @@ module github.com/Dharitri-org/drtg-core
 go 1.20
 
 require (
-	github.com/Dharitri-org/drtg-vm-common v0.0.6
 	github.com/btcsuite/btcutil v1.0.2
 	github.com/denisbrodbeck/machineid v1.0.1
 	github.com/gogo/protobuf v1.3.2
