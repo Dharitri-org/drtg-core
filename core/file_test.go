@@ -3,6 +3,7 @@ package core_test
 import (
 	"encoding/json"
 	"errors"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -145,7 +146,7 @@ func TestLoadJSonFile_FileExitsShouldPass(t *testing.T) {
 
 	data, _ := json.MarshalIndent(TestStruct{A: 0, B: 0}, "", " ")
 
-	_ = os.WriteFile(fileName, data, 0644)
+	_ = ioutil.WriteFile(fileName, data, 0644)
 
 	err = file.Close()
 	assert.Nil(t, err)

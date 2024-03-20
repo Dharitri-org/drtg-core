@@ -1,10 +1,9 @@
-package core_test
+package core
 
 import (
 	"testing"
 	"time"
 
-	"github.com/Dharitri-org/drtg-core/core"
 	"github.com/Dharitri-org/drtg-core/core/mock"
 	"github.com/stretchr/testify/assert"
 )
@@ -16,20 +15,20 @@ var log = &mock.LoggerMock{}
 func TestStopWatch_Start(t *testing.T) {
 	t.Parallel()
 
-	sw := core.NewStopWatch()
+	sw := NewStopWatch()
 
 	sw.Start(identifier)
 
-	_, has := sw.GetStarted(identifier)
+	_, has := sw.started[identifier]
 
 	assert.True(t, has)
-	assert.Equal(t, identifier, sw.GetIdentifiers()[0])
+	assert.Equal(t, identifier, sw.identifiers[0])
 }
 
 func TestStopWatch_DoubleStartShouldNotReAddInIdentifiers(t *testing.T) {
 	t.Parallel()
 
-	sw := core.NewStopWatch()
+	sw := NewStopWatch()
 	identifier1 := "identifier1"
 	identifier2 := "identifier2"
 
@@ -37,19 +36,19 @@ func TestStopWatch_DoubleStartShouldNotReAddInIdentifiers(t *testing.T) {
 	sw.Start(identifier2)
 	sw.Start(identifier1)
 
-	assert.Equal(t, identifier1, sw.GetIdentifiers()[0])
-	assert.Equal(t, identifier2, sw.GetIdentifiers()[1])
-	assert.Equal(t, 2, len(sw.GetIdentifiers()))
+	assert.Equal(t, identifier1, sw.identifiers[0])
+	assert.Equal(t, identifier2, sw.identifiers[1])
+	assert.Equal(t, 2, len(sw.identifiers))
 }
 
 func TestStopWatch_StopNoStartShouldNotAddDuration(t *testing.T) {
 	t.Parallel()
 
-	sw := core.NewStopWatch()
+	sw := NewStopWatch()
 
 	sw.Stop(identifier)
 
-	_, has := sw.GetElapsed(identifier)
+	_, has := sw.elapsed[identifier]
 
 	assert.False(t, has)
 }
@@ -57,12 +56,12 @@ func TestStopWatch_StopNoStartShouldNotAddDuration(t *testing.T) {
 func TestStopWatch_StopWithStartShouldAddDuration(t *testing.T) {
 	t.Parallel()
 
-	sw := core.NewStopWatch()
+	sw := NewStopWatch()
 
 	sw.Start(identifier)
 	sw.Stop(identifier)
 
-	_, has := sw.GetElapsed(identifier)
+	_, has := sw.elapsed[identifier]
 
 	assert.True(t, has)
 }
@@ -70,7 +69,7 @@ func TestStopWatch_StopWithStartShouldAddDuration(t *testing.T) {
 func TestStopWatch_GetMeasurementsNotFinishedShouldOmit(t *testing.T) {
 	t.Parallel()
 
-	sw := core.NewStopWatch()
+	sw := NewStopWatch()
 
 	sw.Start(identifier)
 
@@ -83,7 +82,7 @@ func TestStopWatch_GetMeasurementsNotFinishedShouldOmit(t *testing.T) {
 func TestStopWatch_GetMeasurementsShouldWork(t *testing.T) {
 	t.Parallel()
 
-	sw := core.NewStopWatch()
+	sw := NewStopWatch()
 
 	sw.Start(identifier)
 	sw.Stop(identifier)
@@ -103,12 +102,12 @@ func TestStopWatch_AddShouldWork(t *testing.T) {
 	identifier2 := "identifier2"
 	duration2 := time.Duration(7)
 
-	swSrc := core.NewStopWatch()
-	swSrc.SetIdentifiers([]string{identifier1, identifier2})
-	swSrc.SetElapsed(identifier1, duration1)
-	swSrc.SetElapsed(identifier2, duration2)
+	swSrc := NewStopWatch()
+	swSrc.identifiers = []string{identifier1, identifier2}
+	swSrc.elapsed[identifier1] = duration1
+	swSrc.elapsed[identifier2] = duration2
 
-	sw := core.NewStopWatch()
+	sw := NewStopWatch()
 
 	sw.Add(swSrc)
 
@@ -127,9 +126,9 @@ func TestStopWatch_GetMeasurement(t *testing.T) {
 	t.Parallel()
 
 	fooDuration := time.Duration(4243) * time.Millisecond
-	sw := core.NewStopWatch()
-	sw.SetIdentifiers([]string{"foo"})
-	sw.SetElapsed("foo", fooDuration)
+	sw := NewStopWatch()
+	sw.identifiers = []string{"foo"}
+	sw.elapsed["foo"] = fooDuration
 
 	assert.Equal(t, fooDuration, sw.GetMeasurement("foo"))
 	assert.Equal(t, time.Duration(0), sw.GetMeasurement("bar"))

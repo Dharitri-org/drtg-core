@@ -23,8 +23,6 @@ const (
 
 	// AutoBalanceEnabledString is the string representation of AutoBalanceEnabled trie node version
 	AutoBalanceEnabledString = "auto balanced"
-
-	autoBalanceDataTriesFlag = EnableEpochFlag("AutoBalanceDataTriesFlag")
 )
 
 func (version TrieNodeVersion) String() string {
@@ -42,14 +40,9 @@ type trieNodeVersionVerifier struct {
 	enableEpochsHandler EnableEpochsHandler
 }
 
-// NewTrieNodeVersionVerifier returns a new instance of trieNodeVersionVerifier
 func NewTrieNodeVersionVerifier(enableEpochsHandler EnableEpochsHandler) (*trieNodeVersionVerifier, error) {
 	if check.IfNil(enableEpochsHandler) {
 		return nil, ErrNilEnableEpochsHandler
-	}
-	err := CheckHandlerCompatibility(enableEpochsHandler, []EnableEpochFlag{autoBalanceDataTriesFlag})
-	if err != nil {
-		return nil, err
 	}
 
 	return &trieNodeVersionVerifier{
@@ -59,7 +52,7 @@ func NewTrieNodeVersionVerifier(enableEpochsHandler EnableEpochsHandler) (*trieN
 
 // IsValidVersion returns true if the given trie node version is valid
 func (vv *trieNodeVersionVerifier) IsValidVersion(version TrieNodeVersion) bool {
-	if vv.enableEpochsHandler.IsFlagEnabled(autoBalanceDataTriesFlag) {
+	if vv.enableEpochsHandler.IsAutoBalanceDataTriesEnabled() {
 		return version <= AutoBalanceEnabled
 	}
 
@@ -73,7 +66,7 @@ func (vv *trieNodeVersionVerifier) IsInterfaceNil() bool {
 
 // GetVersionForNewData returns the trie node version that should be used for new data
 func GetVersionForNewData(handler EnableEpochsHandler) TrieNodeVersion {
-	if handler.IsFlagEnabled(autoBalanceDataTriesFlag) {
+	if handler.IsAutoBalanceDataTriesEnabled() {
 		return AutoBalanceEnabled
 	}
 

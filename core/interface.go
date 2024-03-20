@@ -144,9 +144,6 @@ type TrieNodeVersionVerifier interface {
 
 // EnableEpochsHandler defines the behavior of a component that can return if a feature is enabled or not
 type EnableEpochsHandler interface {
-	IsFlagDefined(flag EnableEpochFlag) bool
-	IsFlagEnabled(flag EnableEpochFlag) bool
-	IsFlagEnabledInEpoch(flag EnableEpochFlag, epoch uint32) bool
-	GetActivationEpoch(flag EnableEpochFlag) uint32
+	IsAutoBalanceDataTriesEnabled() bool
 	IsInterfaceNil() bool
 }

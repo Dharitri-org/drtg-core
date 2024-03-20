@@ -1,10 +1,9 @@
-package core_test
+package core
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/Dharitri-org/drtg-core/core"
 	"github.com/Dharitri-org/drtg-core/core/mock"
 	"github.com/stretchr/testify/require"
 )
@@ -19,12 +18,12 @@ func TestDumpGoRoutinesToLogShouldNotPanic(t *testing.T) {
 		}
 	}()
 
-	core.DumpGoRoutinesToLog(0, &mock.LoggerMock{})
+	DumpGoRoutinesToLog(0, &mock.LoggerMock{})
 }
 
 func TestGetRunningGoRoutines(t *testing.T) {
 	t.Parallel()
 
-	res := core.GetRunningGoRoutines(&mock.LoggerMock{})
+	res := GetRunningGoRoutines(&mock.LoggerMock{})
 	require.NotNil(t, res)
 }
