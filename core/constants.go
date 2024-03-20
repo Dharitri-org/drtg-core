@@ -175,17 +175,17 @@ const SemiFungibleDCT = "SemiFungibleDCT"
 // MaxRoyalty defines 100% as uint32
 const MaxRoyalty = uint32(10000)
 
-// RelayedTransaction is the key for the dharitri meta/gassless/relayed transaction standard
+// RelayedTransaction is the key for the electronic meta/gassless/relayed transaction standard
 const RelayedTransaction = "relayedTx"
 
-// RelayedTransactionV2 is the key for the optimized dharitri meta/gassless/relayed transaction standard
+// RelayedTransactionV2 is the key for the optimized electronic meta/gassless/relayed transaction standard
 const RelayedTransactionV2 = "relayedTxV2"
 
 // SCDeployInitFunctionName is the key for the function which is called at smart contract deploy time
 const SCDeployInitFunctionName = "_init"
 
-// DharitriProtectedKeyPrefix is the key prefix which is protected from writing in the trie - only for special builtin functions
-const DharitriProtectedKeyPrefix = "DHARITRI"
+// ProtectedKeyPrefix is the key prefix which is protected from writing in the trie - only for special builtin functions
+const ProtectedKeyPrefix = "E" + "L" + "R" + "O" + "N" + "D"
 
 // DelegationSystemSCKey is the key under which there is data in case of system delegation smart contracts
 const DelegationSystemSCKey = "delegation"
@@ -254,6 +254,3 @@ const CompletedTxEventIdentifier = "completedTxEvent"
 
 // GasRefundForRelayerMessage is the return message for to the smart contract result with refund for the relayer
 const GasRefundForRelayerMessage = "gas refund for relayer"
-
-// DefaultAddressPrefix is the default hrp of Dharitri/Dharitri
-const DefaultAddressPrefix = "moa"
