@@ -40,6 +40,9 @@ const AllShardId = uint32(0xFFFFFFF0)
 // MegabyteSize represents the size in bytes of a megabyte
 const MegabyteSize = 1024 * 1024
 
+// MaxMachineIDLen is the maximum machine ID length
+const MaxMachineIDLen = 10
+
 // BuiltInFunctionClaimDeveloperRewards is the key for the claim developer rewards built-in function
 const BuiltInFunctionClaimDeveloperRewards = "ClaimDeveloperRewards"
 
@@ -257,3 +260,9 @@ const GasRefundForRelayerMessage = "gas refund for relayer"
 
 // InitialVersionOfTransaction defines the initial version for a transaction
 const InitialVersionOfTransaction = uint32(1)
+
+// DefaultAddressPrefix is the default hrp of Dharitri/Dharitri
+const DefaultAddressPrefix = "moa"
+
+// TopicRequestSuffix represents the topic name suffix for requests
+const TopicRequestSuffix = "_REQUEST"
