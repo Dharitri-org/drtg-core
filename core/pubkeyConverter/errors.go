@@ -13,3 +13,9 @@ var ErrInvalidMoaAddress = errors.New("invalid MOA address")
 
 // ErrBech32ConvertError signals that conversion the 5bit alphabet to 8bit failed
 var ErrBech32ConvertError = errors.New("can't convert bech32 string")
+
+// ErrHrpPrefix signals that the prefix is not human readable or empty
+var ErrInvalidHrpPrefix = errors.New("invalid hrp prefix")
+
+// ErrConvertBits signals that a configuration mistake has been introduced
+var ErrConvertBits = errors.New("invalid fromBits or toBits when converting bits")
